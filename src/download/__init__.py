@@ -1,5 +1,6 @@
 import requests, random, os
-from nudenet import NudeDetector
+import opennsfw2 as n2
+
 from PIL import Image
 
 def get_asset_id(clothing_id):
@@ -37,19 +38,6 @@ def get_png_url(asset_id):
         print(f"Error: {e}")
         return None
 
-def nude_detector(path, max_score):
-    score = float(0)
-    detections = NudeDetector().detect(path)
-    for detection in detections:
-        score += float(detection["score"])
-    try:
-        if float(score) / float(len(detections)) > max_score:
-            print(f"Asset did not pass nude detection! PATH: {path}")
-            return False
-        return True
-    except ZeroDivisionError:
-        return True
-
 def replace_template(path):
     img1 = Image.open(path)
     img2 = Image.open("src/assets/template/template.png")
@@ -59,6 +47,15 @@ def replace_template(path):
 
 def save_asset(clothing_id, asset_type, asset_name, max_score, path_2):
  try:
+    path = f"{path_2}/src/assets/temp/{asset_type}/{asset_name}_{random.randint(0, 100)}.png"
+    with open(path, "wb") as f:
+        f.write(get_thumbnail(clothing_id))
+    if n2.predict_image(path) > max_score:
+        os.remove(path)
+        print("asset failed to pass nudity check")
+        print(clothing_id)
+        return False
+    os.remove(path)
     asset_id = get_asset_id(clothing_id)
     if not asset_id:
         print("Failled to scrape asset item id")
@@ -70,9 +67,6 @@ def save_asset(clothing_id, asset_type, asset_name, max_score, path_2):
     path = f"{path_2}/src/assets/temp/{asset_type}/{asset_name}_{random.randint(0, 100)}.png"
     with open(path, 'wb') as f:
         f.write(png)
-    if not nude_detector(path, max_score):
-        os.remove(path)
-        return False
     replace_template(path)
     print("downloaded one asset")
     return path.replace("temp", "")
@@ -83,3 +77,6 @@ def save_asset(clothing_id, asset_type, asset_name, max_score, path_2):
     except:
         pass
     return False
+
+def get_thumbnail(asset_id):
+    return requests.get(requests.post("https://thumbnails.roblox.com/v1/batch", json=[{"format": "png", "requestId": f"{asset_id}::Asset:420x420:png:regular", "size": "420x420", "targetId": asset_id, "token": "", "type": "Asset"}]).json()["data"][0]["imageUrl"]).content

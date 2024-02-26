@@ -28,5 +28,6 @@ def sort_assets(cookie, ids, blacklisted_creators, blacklisted_words, upload_wit
         if dnd:
             continue
         else:
+            item["name"] = item['name'].replace("/", " ")
             items.append(item)
     return items

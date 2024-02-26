@@ -1,0 +1,17 @@
+{
+    "groups": {
+        "group_id": {
+            "uploader_cookies": ["_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|"],
+            "total_upload_each_account": 10,
+            "asset_type": "classicshirts"
+        }
+    },
+    "sleep_each_upload": 3,
+    "assets_price": 5,
+    "description": "",
+    "max_nudity_value": 0.4,
+    "blacklisted_words": [],
+    "upload_without_blacklisted_words": true,
+    "blacklisted_creators": [],
+    "searching_tags": ""
+}

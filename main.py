@@ -2,6 +2,7 @@ import src, time, json, os, random
 
 class xool:
     current_directory = os.getcwd()
+    types = ["classicshirts", "classicpants"]
     def __init__(self, config):
         self.config = config
         for group in config["groups"]:
@@ -9,20 +10,21 @@ class xool:
                 self.upload(cookie, group)
 
     def upload(self, cookie, group_id):
+     while True:
+        current_type = random.choice(self.types)
         cookie = src.cookie.cookie(cookie)
-        assert self.config["groups"][group_id]["asset_type"] in ["classicshirts", "classicpants"], f"invalid asset type. EXPECTED: ['classicshirts', 'classicpants']"
-        total = self.config["groups"][group_id]["total_upload_each_account"] if self.config["groups"][group_id]["total_upload_each_account"] < 121 else 120
-        items = src.scrape.scrape_assets(cookie, self.config["searching_tags"], self.config["groups"][group_id]["asset_type"])
+        items = src.scrape.scrape_assets(cookie, self.config["searching_tags"], current_type)
         random.shuffle(items)
-        scraped = src.scrape.sort_assets(cookie, items[:total], self.config["blacklisted_creators"], self.config["blacklisted_words"], self.config["upload_without_blacklisted_words"]
+        scraped = src.scrape.sort_assets(cookie, items[:5], self.config["blacklisted_creators"], self.config["blacklisted_words"], self.config["upload_without_blacklisted_words"]
         )
         for item in scraped:
-            path = src.download.save_asset(item["id"], "shirts" if self.config["groups"][group_id]["asset_type"] == "classicshirts" else "pants", item["name"], self.config["max_nudity_value"], self.current_directory)
+            path = src.download.save_asset(item["id"], "shirts" if current_type == "classicshirts" else "pants", item["name"], self.config["max_nudity_value"], self.current_directory)
             if not path: continue
-            item_uploaded = src.upload.create_asset(item["name"], path, "shirt" if self.config["groups"][group_id]["asset_type"] == "classicshirts" else "pants", cookie, group_id, self.config["description"], 5, 5)
+            item_uploaded = src.upload.create_asset(item["name"], path, "tshirt" if current_type == "classicshirts" else "pants", cookie, group_id, self.config["description"], 5, 5)
             if item_uploaded is False:
                 return
-            print(src.upload.release_asset(cookie, item_uploaded['response']['assetId'], self.config["assets_price"]).json())
+            if src.upload.release_asset(cookie, item_uploaded['response']['assetId'], self.config["assets_price"]).json() == "{}":
+                print(f"Successfully uploaded new asset: ID {item_uploaded['response']['assetId']}")
             time.sleep(self.config["sleep_each_upload"])
 
 xool(json.loads(open("config.json", "r").read()))

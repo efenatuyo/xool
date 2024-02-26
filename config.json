@@ -1,9 +1,7 @@
 {
     "groups": {
         "group_id": {
-            "uploader_cookies": ["_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|"],
-            "total_upload_each_account": 10,
-            "asset_type": "classicshirts"
+            "uploader_cookies": ["_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|"]
         }
     },
     "sleep_each_upload": 3,

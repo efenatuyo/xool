@@ -1,7 +1,8 @@
-import requests
+import requests, random
 
 def scrape_assets(cookie, keywords, subcategory):
-    items =  requests.get(f"https://catalog.roblox.com/v1/search/items?category=Clothing&keyword={keywords}&limit=120&salesTypeFilter=1&subcategory={subcategory}", 
+    
+    items =  requests.get(f"https://catalog.roblox.com/v1/search/items?category=Clothing&limit=120&salesTypeFilter=1&sortAggregation=1&sortType={random.randint(0, 2)}&subcategory={subcategory}&minPrice=5&keyword={keywords}", 
                         cookies={".ROBLOSECURITY": cookie.cookie}, 
                         headers={"x-csrf-token": cookie.x_token()}).json()["data"]
     return [item['id'] for item in items]

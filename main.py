@@ -1,4 +1,4 @@
-import src, time, json, os
+import src, time, json, os, random
 
 class xool:
     current_directory = os.getcwd()
@@ -12,9 +12,9 @@ class xool:
         cookie = src.cookie.cookie(cookie)
         assert self.config["groups"][group_id]["asset_type"] in ["classicshirts", "classicpants"], f"invalid asset type. EXPECTED: ['classicshirts', 'classicpants']"
         total = self.config["groups"][group_id]["total_upload_each_account"] if self.config["groups"][group_id]["total_upload_each_account"] < 121 else 120
-        scraped = src.scrape.sort_assets(cookie, 
-                                    src.scrape.scrape_assets(cookie, self.config["searching_tags"], self.config["groups"][group_id]["asset_type"])
-                                    [:total], self.config["blacklisted_creators"], self.config["blacklisted_words"], self.config["upload_without_blacklisted_words"]
+        items = src.scrape.scrape_assets(cookie, self.config["searching_tags"], self.config["groups"][group_id]["asset_type"])
+        random.shuffle(items)
+        scraped = src.scrape.sort_assets(cookie, items[:total], self.config["blacklisted_creators"], self.config["blacklisted_words"], self.config["upload_without_blacklisted_words"]
         )
         for item in scraped:
             path = src.download.save_asset(item["id"], "shirts" if self.config["groups"][group_id]["asset_type"] == "classicshirts" else "pants", item["name"], self.config["max_nudity_value"], self.current_directory)

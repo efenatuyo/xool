@@ -1,5 +1,6 @@
 # xool
-a good and fast clothing bot made for groupds
+a good and fast clothing bot made for groups. 
+- IF YOU NEED HELP JOIN https://discord.gg/QJKjcTQHCJ
 
 ## requirements
 - Python 3.x

@@ -1,3 +1,4 @@
 requests
 Pillow
 opennsfw2
+tensorflow

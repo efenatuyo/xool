@@ -2,3 +2,4 @@ requests
 Pillow
 opennsfw2
 tensorflow
+requests_toolbelt

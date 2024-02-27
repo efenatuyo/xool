@@ -26,8 +26,7 @@ class xool:
             item_uploaded = src.upload.create_asset(item["name"], path, "shirt" if current_type == "classicshirts" else "pants", cookie, group_id, self.config["description"], 5, 5)
             if item_uploaded is False:
                 return
-            if src.upload.release_asset(cookie, item_uploaded['response']['assetId'], self.config["assets_price"]).json() == "{}":
-                print(f"Successfully uploaded new asset: ID {item_uploaded['response']['assetId']}")
+            print(src.upload.release_asset(cookie, item_uploaded['response']['assetId'], self.config["assets_price"]).json())
             time.sleep(self.config["sleep_each_upload"])
       except:
           continue

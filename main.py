@@ -1,4 +1,4 @@
-import src, time, json, os, random, logging, tensorflow
+import src, time, json, os, random, logging, tensorflow, traceback
 
 tensorflow.get_logger().setLevel(logging.FATAL)
 
@@ -33,7 +33,7 @@ class xool:
                 print(f"Failed to release item. ID {item_uploaded['response']['assetId']}")
             time.sleep(self.config["sleep_each_upload"])
       except Exception as e:
-          print(f"ERROR: {e}")
+          print(f"ERROR: {traceback.format_exc()}")
         
 
 xool(json.loads(open("config.json", "r").read()))

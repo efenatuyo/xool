@@ -7,7 +7,6 @@ a good and fast clothing bot made for groups.
 - requirements.txt | `pip install -r requirements.txt`
 
 ## setup
-- asset_type can be `classicshirts` | `classicpants`
 - uploader cookies
 - the rest is just reading :D
 

@@ -29,8 +29,8 @@ class xool:
             src.upload.release_asset(cookie, item_uploaded['response']['assetId'], self.config["assets_price"]).json()
             print(f"Released item. ID {item_uploaded['response']['assetId']}")
             time.sleep(self.config["sleep_each_upload"])
-      except:
-          continue
+      except Exception as e:
+          print(f"ERROR: {e}")
         
 
 xool(json.loads(open("config.json", "r").read()))

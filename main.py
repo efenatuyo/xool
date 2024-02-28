@@ -27,7 +27,7 @@ class xool:
             if item_uploaded is False:
                 return
             response = src.upload.release_asset(cookie, item_uploaded['response']['assetId'], self.config["assets_price"])
-            if response.status == 200:
+            if response.status_code == 200:
                 print(f"Released item. ID {item_uploaded['response']['assetId']}")
             else:
                 print(f"Failed to release item. ID {item_uploaded['response']['assetId']}")

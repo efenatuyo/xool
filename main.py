@@ -25,7 +25,7 @@ class xool:
             if not path: continue
             item_uploaded = src.upload.create_asset(item["name"], path, "shirt" if current_type == "classicshirts" else "pants", cookie, group_id, self.config["description"], 5, 5)
             if item_uploaded is False:
-                continue
+                return
             response = src.upload.release_asset(cookie, item_uploaded['response']['assetId'], self.config["assets_price"])
             if response.status_code == 200:
                 print(f"Released item. ID {item_uploaded['response']['assetId']}")

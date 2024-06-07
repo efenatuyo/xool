@@ -1,7 +1,7 @@
 # xool
 a good and fast clothing bot made for groups. 
 - IF YOU NEED HELP JOIN https://discord.gg/FuWMnMWQ7r
-- every 5 starts 1 update
+- every 5 stars 1 update
 ## requirements
 - Python 3.x
 - requirements.txt | `pip install -r requirements.txt`

@@ -26,8 +26,8 @@ class xool:
             item_uploaded = src.upload.create_asset(item["name"], path, "shirt" if current_type == "classicshirts" else "pants", cookie, group_id, self.config["description"], 5, 5)
             if item_uploaded is False:
                 return
-            response = src.upload.release_asset(cookie, item_uploaded['response']['assetId'], self.config["assets_price"])
-            if response.status_code == 200:
+            response = src.upload.release_asset(cookie, item_uploaded['response']['assetId'], self.config["assets_price"], item["name"], self.config["description"], group_id)
+            if response.status_code == 200 and response.json()["status"] == 0:
                 print(f"Released item. ID {item_uploaded['response']['assetId']}")
             else:
                 print(f"Failed to release item. ID {item_uploaded['response']['assetId']}")

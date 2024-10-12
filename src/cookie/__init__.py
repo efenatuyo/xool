@@ -8,7 +8,7 @@ class cookie:
         self.generate_token()
 
     def generate_token(self):
-        self._x_token = requests.post("https://economy.roblox.com/", cookies={".ROBLOSECURITY": self.cookie}).headers.get("x-csrf-token")
+        self._x_token = requests.post("https://auth.roblox.com/v2/logout", cookies={".ROBLOSECURITY": self.cookie}).headers.get("x-csrf-token")
         self.last_generated_time = time.time()
 
     def x_token(self):

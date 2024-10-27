@@ -1,5 +1,6 @@
 requests
+tensorflow
 Pillow
 opennsfw2
-tensorflow
 requests_toolbelt
+imagehash

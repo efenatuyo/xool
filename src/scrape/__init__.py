@@ -35,5 +35,9 @@ def sort_assets(cookie, ids, blacklisted_creators, blacklisted_words, upload_wit
             item["name"] = item['name'].replace("/", " ")
             items.append(item)
      return items
+    elif response.status_code == 403:
+        raise Exception("403")
+    elif response.status_code == 429:
+        raise Exception("Ratelimit hit. This may take a while to go away.")
     else:
         return []

@@ -35,6 +35,8 @@ class xool:
             item_uploaded = src.upload.create_asset(item["name"], path, "shirt" if current_type == "classicshirts" else "pants", cookie, group_id, self.config["description"], 5, 5)
             if item_uploaded is False:
                 return
+            elif item_uploaded == 2:
+                continue
             response = src.upload.release_asset(cookie, item_uploaded['response']['assetId'], self.config["assets_price"], item["name"], self.config["description"], group_id)
             if response.status_code == 200 and response.json()["status"] == 0:
                 print(f"Released item. ID {item_uploaded['response']['assetId']}")
@@ -42,11 +44,10 @@ class xool:
                 print(f"Failed to release item. ID {item_uploaded['response']['assetId']}")
             time.sleep(self.config["sleep_each_upload"])
       except Exception as e:
-          if str(e) == "403":
-              print("403")
-              continue
-              raise Exception("Invalid cookie") 
-          print(f"ERROR: {traceback.format_exc()}")
+            if str(e) == "403":
+                print("403")
+                raise Exception("Invalid cookie") 
+            print(f"ERROR: {traceback.format_exc()}")
         
 
 xool(json.loads(open("config.json", "r").read()))

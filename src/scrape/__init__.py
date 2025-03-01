@@ -1,4 +1,4 @@
-import requests, random
+import requests, random, re
 
 def scrape_assets(cookie, keywords, subcategory):
     
@@ -21,6 +21,7 @@ def sort_assets(cookie, ids, blacklisted_creators, blacklisted_words, upload_wit
         dnd = False
         if item["creatorTargetId"] in blacklisted_creators:
             continue
+        item["name"] = re.sub(r'[<>:"/\\|?*]', '_', item['name'])
         for blacklisted_word in blacklisted_words:
             if blacklisted_word in item["name"]:
                 if upload_without_blacklisted_words:

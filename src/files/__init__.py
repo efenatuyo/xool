@@ -1,6 +1,23 @@
 import os
 from PIL import Image
 import imagehash
+import re
+
+
+def is_duplicate_file(folder_path, filename):
+    pattern = re.compile(r"^(.*?)(_\d+)?(\.[^.]*)?$")
+    match = pattern.match(filename)
+
+    if not match:
+        return False
+
+    base_name = match.group(1) + (match.group(3) or "")
+    for existing_file in os.listdir(folder_path):
+        existing_match = pattern.match(existing_file)
+        existing_base_name = existing_match.group(1) + (existing_match.group(3) or "")
+        if base_name == existing_base_name and existing_file != filename:
+            return True
+    return False
 
 def remove_png():
     for root, dirs, files in os.walk("src/assets"):

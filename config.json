@@ -4,7 +4,7 @@
             "uploader_cookies": ["_|WARNING:-DO-NOT-SHARE-THIS.--Sharing-this-will-allow-someone-to-log-in-as-you-and-to-steal-your-ROBUX-and-items.|"]
         }
     },
-    "sleep_each_upload": 3,
+    "sleep_each_upload": 1,
     "assets_price": 5,
     "description": "Cute cool kawaii kitty cherry anime Japanese vamp emo gloomy blossom sad goth baddie cutie cyber swag drip limited aesthetic lovely hot trendy stylish classic popular old vintage exquisite exclusive cheap sale beautiful prestigious villain hero supreme Nike Adidas Gucci Off White original fashion king RP roleplay Marshmello Alan Walker Deadmau5 David Guetta Martin KSI Paul lantern festival festivity celebration Mardi Gras St. Patrick Halloween Thanksgiving Father Christmas Xmas Boxing Santa summer sunny beach holiday vacation red ruby pink black blue gold diamond glowy denim grunge ripped trim checkered plaid rainbow colorful bikini baggy pastel casual crop top jeans shoes gyaru girl pants shirt Logan XL he OK pink void 90s shorts t-shirt sweater gothic loss tank top",
     "max_nudity_value": 0.1,
@@ -12,5 +12,8 @@
     "upload_without_blacklisted_words": true,
     "blacklisted_creators": [],
     "searching_tags": "",
-    "require_one_tag_in_name": false
+    "require_one_tag_in_name": false,
+    "upload_amount": 20,
+    "delete_all_images_on_restart": false,
+    "dupe_check": true
 }

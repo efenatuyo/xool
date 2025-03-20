@@ -28,21 +28,24 @@ class xool:
         )
         for item in scraped:
             if self.config["dupe_check"] and src.files.is_duplicate_file(f"{self.current_directory}/src/assets/{'shirts' if current_type == 'classicshirts' else 'pants'}", f"{item['name']}_{random.randint(0, 100)}.png"):
-                print(f"DUPE: {item['name']}")
+                print(f"DUPE skipping: {item['name']}")
                 continue
             path = src.download.save_asset(item["id"], "shirts" if current_type == "classicshirts" else "pants", item["name"], self.config["max_nudity_value"], self.current_directory)
-            if not path: 
+            if not path:
+                print(f"No path found skipping skipping: {item['name']}")
                 continue
             if self.config["require_one_tag_in_name"]:
                 if any(value.lower() in os.path.basename(path).lower().split(" ") for value in self.config["searching_tags"].split(",")):
+                    print(f"No required tag found skipping: {item['name']}")
                     continue
             if src.files.is_similar(path, current_type):
+                print(f"Found similar clothe skipping: {item['name']}")
                 continue
             item_uploaded = src.upload.create_asset(item["name"], path, "shirt" if current_type == "classicshirts" else "pants", cookie, group_id, self.config["description"], 5, 5)
             if item_uploaded is False:
                 return
             elif item_uploaded == 2:
-                continue
+                print(f"Failed to upload skipping: {item['name']}")
             response = src.upload.release_asset(cookie, item_uploaded['response']['assetId'], self.config["assets_price"], item["name"], self.config["description"], group_id)
             if response.status_code == 200 and response.json()["status"] == 0:
                 print(f"Released item. ID {item_uploaded['response']['assetId']}")

@@ -58,6 +58,7 @@ class xool:
       except Exception as e:
             if str(e) == "403":
                 print("403: Could mean invalid cookie.")
+                cookie.generate_token()
                 continue
             print(f"ERROR: {traceback.format_exc()}")
       finally:

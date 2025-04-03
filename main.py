@@ -38,7 +38,7 @@ class xool:
                 if any(value.lower() in os.path.basename(path).lower().split(" ") for value in self.config["searching_tags"].split(",")):
                     print(f"No required tag found skipping: {item['name']}")
                     continue
-            if src.files.is_similar(path, current_type):
+            if self.config["dupe_check"] and src.files.is_similar(path, current_type):
                 print(f"Found similar clothe skipping: {item['name']}")
                 continue
             item_uploaded = src.upload.create_asset(item["name"], path, "shirt" if current_type == "classicshirts" else "pants", cookie, group_id, self.config["description"], 5, 5)

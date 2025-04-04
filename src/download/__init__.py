@@ -3,9 +3,9 @@ import opennsfw2 as n2
 
 from PIL import Image
 
-def get_asset_id(clothing_id):
+def get_asset_id(cookie, clothing_id):
     try:
-        response = requests.get(f'https://assetdelivery.roblox.com/v1/assetId/{clothing_id}')
+        response = requests.get(f'https://assetdelivery.roblox.com/v1/assetId/{clothing_id}', cookies={".ROBLOSECURITY": cookie.cookie})
         response.raise_for_status() 
         data = response.json()
         if data.get("IsCopyrightProtected"):
@@ -24,9 +24,9 @@ def get_asset_id(clothing_id):
         print(f"Error: {e}")
         return None
 
-def get_png_url(asset_id):
+def get_png_url(cookie, asset_id):
     try:
-        response = requests.get(f'https://assetdelivery.roblox.com/v1/assetId/{asset_id}')
+        response = requests.get(f'https://assetdelivery.roblox.com/v1/assetId/{asset_id}', cookies={".ROBLOSECURITY": cookie.cookie})
         response.raise_for_status()
         data = response.json()
         if data.get("IsCopyrightProtected"):
@@ -45,7 +45,7 @@ def replace_template(path):
     img1.save(path.replace("temp", ""))
     os.remove(path)
 
-def save_asset(clothing_id, asset_type, asset_name, max_score, path_2):
+def save_asset(cookie, clothing_id, asset_type, asset_name, max_score, path_2):
  try:
     path = f"{path_2}/src/assets/temp/{asset_type}/{asset_name}_{random.randint(0, 100)}.png"
     with open(path, "wb") as f:
@@ -56,11 +56,11 @@ def save_asset(clothing_id, asset_type, asset_name, max_score, path_2):
         print(clothing_id)
         return False
     os.remove(path)
-    asset_id = get_asset_id(clothing_id)
+    asset_id = get_asset_id(cookie, clothing_id)
     if not asset_id:
         print("Failled to scrape asset item id")
         return False
-    png = get_png_url(asset_id)
+    png = get_png_url(cookie, asset_id)
     if not png:
         print("Failed to download asset png")
         return False

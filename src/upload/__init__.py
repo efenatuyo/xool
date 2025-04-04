@@ -24,8 +24,10 @@ def create_asset(name, path, asset_type, cookie, group_id, description, _total_t
     dd = requests.post("https://apis.roblox.com/assets/user-auth/v1/assets", data=multipart_data, headers=headers, cookies={".ROBLOSECURITY": cookie.cookie}).json()
     if not dd.get("operationId"):
         print(dd["message"])
-        if dd["message"] != "InsufficientFunds. 10 Robux is needed.":
+        if "InsufficientFunds" in dd["message"]:
             return 2
+        elif "unauthorized" in dd["message"]:
+            return 3
         return False
     total_tries = 0
     while total_tries < _total_tries:

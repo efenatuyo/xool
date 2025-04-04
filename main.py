@@ -30,7 +30,7 @@ class xool:
             if self.config["dupe_check"] and src.files.is_duplicate_file(f"{self.current_directory}/src/assets/{'shirts' if current_type == 'classicshirts' else 'pants'}", f"{item['name']}_{random.randint(0, 100)}.png"):
                 print(f"DUPE skipping: {item['name']}")
                 continue
-            path = src.download.save_asset(item["id"], "shirts" if current_type == "classicshirts" else "pants", item["name"], self.config["max_nudity_value"], self.current_directory)
+            path = src.download.save_asset(cookie, item["id"], "shirts" if current_type == "classicshirts" else "pants", item["name"], self.config["max_nudity_value"], self.current_directory)
             if not path:
                 print(f"No path found skipping skipping: {item['name']}")
                 continue
@@ -45,7 +45,11 @@ class xool:
             if item_uploaded is False:
                 return
             elif item_uploaded == 2:
-                print(f"Failed to upload skipping: {item['name']}")
+                print(f"Failed to upload skipping (not enough funds): {item['name']}")
+                continue
+            elif item_uploaded == 3:
+                print(f"Failed to upload skipping (no permission): {item['name']}")
+                continue
             response = src.upload.release_asset(cookie, item_uploaded['response']['assetId'], self.config["assets_price"], item["name"], self.config["description"], group_id)
             if response.status_code == 200 and response.json()["status"] == 0:
                 print(f"Released item. ID {item_uploaded['response']['assetId']}")

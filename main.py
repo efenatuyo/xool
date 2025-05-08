@@ -43,7 +43,8 @@ class xool:
                 continue
             item_uploaded = src.upload.create_asset(item["name"], path, "shirt" if current_type == "classicshirts" else "pants", cookie, group_id, self.config["description"], 5, 5)
             if item_uploaded is False:
-                return
+                print(f"Failed to upload skipping: {item['name']}")
+                continue
             elif item_uploaded == 2:
                 print(f"Failed to upload skipping (not enough funds): {item['name']}")
                 continue
